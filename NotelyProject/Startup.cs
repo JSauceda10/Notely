@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NotelyProject.Database;
 using Microsoft.EntityFrameworkCore;
+using NotelyProject.Repositories.Implementations;
+using NotelyProject.Repositories;
 
 namespace NotelyProject
 {
@@ -28,6 +30,7 @@ namespace NotelyProject
         {
             services.AddControllers();
             services.AddDbContext<NotelyDBContext>(options => options.UseSqlite(Configuration["Data:NotelyRestApi:ConnectionString"]));
+            services.AddTransient<INoteRepository, NoteRepository>();
         }
 
         //This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
