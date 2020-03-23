@@ -13,6 +13,7 @@ using NotelyProject.Database;
 using Microsoft.EntityFrameworkCore;
 using NotelyProject.Repositories.Implementations;
 using NotelyProject.Repositories;
+using Microsoft.OpenApi.Models;
 
 namespace NotelyProject
 {
@@ -29,6 +30,10 @@ namespace NotelyProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Notely Rest API", Version = "v1" });
+            });
             services.AddDbContext<NotelyDBContext>(options => options.UseSqlite(Configuration["Data:NotelyRestApi:ConnectionString"]));
             services.AddTransient<INoteRepository, NoteRepository>();
         }
@@ -40,6 +45,12 @@ namespace NotelyProject
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Notely Rest API");
+            });
 
             app.UseRouting();
 

@@ -12,6 +12,6 @@ namespace NotelyProject.Repositories
         public IEnumerable<Note> GetAllNotes();
         public void SaveNote(Note note);
         public void EditNote(Note note);
-        public void DeleteNote(Note note)
+        public void DeleteNote(Note note);
     }
 }
